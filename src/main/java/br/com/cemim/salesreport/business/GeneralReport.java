@@ -24,7 +24,11 @@ public class GeneralReport {
 
 	@Override
 	public String toString() {
-		return "GeneralReport [worstSalesman=" + worstSalesman + ", mostExpensiveSale=" + mostExpensiveSale + "]";
+		String report = 
+				"ID of the most expensive sale: " + mostExpensiveSale.getId() + "\n" +
+				"Worst salesman ever: " + worstSalesman.getName() + "\n\n";
+
+		return report;
 	}
 
 }

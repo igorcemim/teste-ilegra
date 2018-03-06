@@ -46,8 +46,7 @@ public class LineProcessor {
 		this.fileReport = fileReport;
 	}
 
-	public void analyze(String line) {
-		
+	public void process(String line) {
 		switch (line.substring(LAYOUT_CODE_POSITION_START, LAYOUT_CODE_POSITION_END)) {
 
 			case SalesmanLayout.LAYOUT_CODE:

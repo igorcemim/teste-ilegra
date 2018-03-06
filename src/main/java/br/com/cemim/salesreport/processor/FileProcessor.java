@@ -1,6 +1,7 @@
 package br.com.cemim.salesreport.processor;
 
 import java.util.Map;
+import java.util.stream.Stream;
 
 import br.com.cemim.salesreport.business.Customer;
 import br.com.cemim.salesreport.business.FileReport;
@@ -40,23 +41,23 @@ public class FileProcessor {
 		this.generalReport = generalReport;
 	}
 
-	public void process(String[] lines) {
+	public FileReport process(Stream<String> lines) {
 		FileReport fileReport = new FileReport();
-		
-		for (String line : lines) {
-			LineProcessor lineProcessor = new LineProcessor(
-					salesmanLayout,
-					customerLayout,
-					saleLayout,
-					salesmanMap,
-					customerMap,
-					saleMap,
-					generalReport,
-					fileReport
-			);
-			lineProcessor.analyze(line);
-		}
-		System.out.println(fileReport);
+		LineProcessor lineProcessor = new LineProcessor(
+			salesmanLayout,
+			customerLayout,
+			saleLayout,
+			salesmanMap,
+			customerMap,
+			saleMap,
+			generalReport,
+			fileReport
+		);
+		lines.forEach(line -> {
+			lineProcessor.process(line);
+		});
+
+		return fileReport;
 	}
 
 }
