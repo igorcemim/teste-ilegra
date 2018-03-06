@@ -48,6 +48,7 @@ public class LineProcessor {
 		switch (line.substring(0, 3)) {
 
 			case SalesmanLayout.LAYOUT_CODE:
+				
 				Salesman salesman = salesmanLayout.read(line);
 				if (!salesmanMap.containsKey(salesman.getName())) {
 					salesmanMap.put(salesman.getName(), salesman);
@@ -56,6 +57,7 @@ public class LineProcessor {
 				break;
 		
 			case CustomerLayout.LAYOUT_CODE:
+				
 				Customer customer = customerLayout.read(line);
 				if (!customerMap.containsKey(customer.getName()) ) {
 					customerMap.put(customer.getName(), customer);
@@ -64,9 +66,11 @@ public class LineProcessor {
 				break;
 		
 			case SaleLayout.LAYOUT_CODE:
+				
 				Sale sale = saleLayout.read(line);
+				Salesman saleSalesman = sale.getSalesman(); 
+				saleSalesman.addSale(sale.getTotal());;
 				saleMap.put(sale.getId(), sale);
-				sale.getSalesman().addSale(sale.getTotal());;
 				break;
 		}
 	}
