@@ -2,7 +2,7 @@ package br.com.cemim.salesreport.business;
 
 import java.util.List;
 
-public class Sale implements Business {
+public class Sale {
 	
 	private int id;
 	

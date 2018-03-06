@@ -1,6 +1,6 @@
 package br.com.cemim.salesreport.business;
 
-public class Customer implements Business {
+public class Customer {
 	
 	private String cnpj;
 	

@@ -1,6 +1,6 @@
 package br.com.cemim.salesreport.business;
 
-public class Item implements Business {
+public class Item {
 	
 	private int id;
 	private int quantity;
