@@ -2,7 +2,6 @@ package br.com.cemim.salesreport.layout;
 
 import br.com.cemim.salesreport.business.Sale;
 import br.com.cemim.salesreport.business.Salesman;
-import br.com.cemim.salesreport.repository.SalesmanRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,14 +23,8 @@ public class SaleLayout extends AbstractLayout<Sale> {
 	public static final int FIELD_ITEM_QUANTITY = 1;
 	public static final int FIELD_ITEM_PRICE = 2;
 	
-	private SalesmanRepository salesmanRepository;
-	
 	private Map<String, Salesman> salesmanMap;
 
-	public void setSalesmanRepository(SalesmanRepository salesmanRepository) {
-		this.salesmanRepository = salesmanRepository;
-	}
-	
 	public void setSalesmanMap(Map<String, Salesman> salesmanMap) {
 		this.salesmanMap = salesmanMap;
 	}
