@@ -37,6 +37,10 @@ public class Salesman {
 	public void addSale(double sale) {
 		sales += sale;
 	}
+	
+	public double getSales() {
+		return sales;
+	}
 
 	@Override
 	public String toString() {

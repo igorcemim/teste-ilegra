@@ -68,6 +68,12 @@ public class LineProcessor {
 			case SaleLayout.LAYOUT_CODE:
 				
 				Sale sale = saleLayout.read(line);
+				if (generalReport.getMostExpensiveSale() == null) {
+					generalReport.setMostExpensiveSale(sale);
+				}
+				if (sale.getTotal() > generalReport.getMostExpensiveSale().getTotal()) {
+					generalReport.setMostExpensiveSale(sale);
+				}
 				Salesman saleSalesman = sale.getSalesman(); 
 				saleSalesman.addSale(sale.getTotal());;
 				saleMap.put(sale.getId(), sale);

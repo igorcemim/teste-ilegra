@@ -1,6 +1,11 @@
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 
+import br.com.cemim.salesreport.business.Customer;
 import br.com.cemim.salesreport.business.GeneralReport;
+import br.com.cemim.salesreport.business.Sale;
+import br.com.cemim.salesreport.business.Salesman;
 import br.com.cemim.salesreport.layout.CustomerLayout;
 import br.com.cemim.salesreport.layout.SaleLayout;
 import br.com.cemim.salesreport.layout.SalesmanLayout;
@@ -9,20 +14,29 @@ import br.com.cemim.salesreport.processor.FileProcessor;
 public class Main {
 	
 	public static void main(String[] args) throws Exception {
+		Map<String, Salesman> salesmanMap = new HashMap<>();
+		Map<String, Customer> customerMap = new HashMap<>();
+		Map<Integer, Sale> saleMap = new HashMap<>();
+		
 		SalesmanLayout salesmanLayout = new SalesmanLayout();
 		CustomerLayout customerLayout = new CustomerLayout();
 		SaleLayout saleLayout = new SaleLayout();
+		saleLayout.setSalesmanMap(salesmanMap);
+		
 		String home = System.getProperty("user.home");
+
+		GeneralReport generalReport = new GeneralReport();
 		
 		FileProcessor processor = new FileProcessor(
 				salesmanLayout,
 				customerLayout,
 				saleLayout,
-				new HashMap<>(),
-				new HashMap<>(),
-				new HashMap<>(),
-				new GeneralReport()
+				salesmanMap,
+				customerMap,
+				saleMap,
+				generalReport
 		);
+		
 		String file =
 				"001ç1234567891234çDiegoç50000\n" + 
 				"001ç3245678865434çRenatoç40000.99\n" + 
@@ -32,6 +46,15 @@ public class Main {
 				"003ç08ç[1-34-10,2-33-1.50,3-40-0.10]çRenato";
 
 		processor.process(file.split("\n"));
+
+		Salesman worstSalesman = salesmanMap.values()
+				.stream()
+				.min(Comparator.comparingDouble(Salesman::getSales))
+				.get();
+		
+		generalReport.setWorstSalesman(worstSalesman);
+		
+		System.out.println(generalReport);
 	}
 
 }

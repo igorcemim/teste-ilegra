@@ -42,7 +42,6 @@ public class FileProcessor {
 
 	public void process(String[] lines) {
 		FileReport fileReport = new FileReport();
-		saleLayout.setSalesmanMap(salesmanMap);
 		
 		for (String line : lines) {
 			LineProcessor lineProcessor = new LineProcessor(
