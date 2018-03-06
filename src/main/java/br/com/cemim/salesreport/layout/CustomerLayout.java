@@ -13,28 +13,11 @@ public class CustomerLayout extends AbstractLayout<Customer> {
 
 	@Override
 	public Customer read(String line) {
-		int fieldIndex = 0;
+		String[] fields = line.split(FIELD_DELIMITER);
 		Customer customer = new Customer();
-
-		for (String field : line.split(FIELD_DELIMITER)) {
-
-			switch (fieldIndex) {
-
-				case FIELD_CNPJ:
-					customer.setCnpj(field);
-					break;
-				
-				case FIELD_NAME:
-					customer.setName(field);
-					break;
-
-				case FIELD_BUSINESS_AREA:
-					customer.setBusinessArea(field);
-					break;
-
-			}
-			fieldIndex++;
-		}
+		customer.setCnpj(fields[FIELD_CNPJ]);
+		customer.setName(fields[FIELD_NAME]);
+		customer.setBusinessArea(fields[FIELD_BUSINESS_AREA]);
 
 		return customer;
 	}

@@ -2,9 +2,11 @@ package br.com.cemim.salesreport.layout;
 
 import br.com.cemim.salesreport.business.Sale;
 import br.com.cemim.salesreport.business.Salesman;
+import br.com.cemim.salesreport.repository.SalesmanRepository;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.com.cemim.salesreport.business.Item;
 
@@ -17,37 +19,43 @@ public class SaleLayout extends AbstractLayout<Sale> {
 	public static final int FIELD_ITEMS = 2;
 	public static final int FIELD_SALESMAN_NAME = 3;
 	
-	public static final int FIELD_ITEM_ID = 1;
-	public static final int FIELD_ITEM_QUANTITY = 2;
-	public static final int FIELD_ITEM_PRICE = 3;
+	public static final int FIELD_ITEM_ID = 0;
+	public static final int FIELD_ITEM_QUANTITY = 1;
+	public static final int FIELD_ITEM_PRICE = 2;
+	
+	private SalesmanRepository salesmanRepository;
+	
+	public void setSalesmanRepository(SalesmanRepository salesmanRepository) {
+		this.salesmanRepository = salesmanRepository;
+	}
 
 	@Override
 	public Sale read(String line) {
-		int fieldIndex = 0;
+		String[] fields = line.split(FIELD_DELIMITER);
+		
+		Salesman salesman = salesmanRepository.findByName(fields[FIELD_SALESMAN_NAME]);
+		
+		String rawItems = fields[FIELD_ITEMS].substring(1, fields[FIELD_ITEMS].length() - 1);
+		
+		List<Item> items = Arrays.asList(rawItems.split(","))
+			.stream()
+			.map(rawItem -> {
+				String[] itemData = rawItem.split("-");
+
+	            Item item = new Item();
+	            item.setId(Integer.parseInt(itemData[FIELD_ITEM_ID]));
+	            item.setQuantity(Integer.parseInt(itemData[FIELD_ITEM_QUANTITY]));
+	            item.setPrice(Double.parseDouble(itemData[FIELD_ITEM_PRICE]));
+
+	            return item;
+	        })
+			.collect(Collectors.toList());
+
 		Sale sale = new Sale();
+		sale.setId(Integer.parseInt(fields[FIELD_SALE_ID]));
+		sale.setItems(items);
+		sale.setSalesman(salesman);
 
-		for (String field : line.split(FIELD_DELIMITER)) {
-
-			switch (fieldIndex) {
-
-				case FIELD_SALE_ID:
-					sale.setId(Integer.parseInt(field));
-					break;
-				
-				case FIELD_ITEMS:
-					List<Item> items = new ArrayList<>();
-					sale.setItems(items);
-					break;
-
-				case FIELD_SALESMAN_NAME:
-					Salesman salesman = new Salesman();
-					sale.setSalesman(salesman);
-					break;
-
-			}
-			fieldIndex++;
-		}
-System.out.println(sale);
 		return sale;
 	}
 

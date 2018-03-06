@@ -13,28 +13,11 @@ public class SalesmanLayout extends AbstractLayout<Salesman> {
 
 	@Override
 	public Salesman read(String line) {
-		int fieldIndex = 0;
 		Salesman salesman = new Salesman();
-
-		for (String field : line.split(FIELD_DELIMITER)) {
-
-			switch (fieldIndex) {
-
-				case FIELD_CPF:
-					salesman.setCpf(field);
-					break;
-				
-				case FIELD_NAME:
-					salesman.setName(field);
-					break;
-
-				case FIELD_SALARY:
-					salesman.setSalary(Double.parseDouble(field));
-					break;
-
-			}
-			fieldIndex++;
-		}
+		String[] fields = line.split(FIELD_DELIMITER);
+		salesman.setCpf(fields[FIELD_CPF]);
+		salesman.setName(fields[FIELD_NAME]);
+		salesman.setSalary(Double.parseDouble(fields[FIELD_SALARY]));
 
 		return salesman;
 	}

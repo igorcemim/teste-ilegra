@@ -27,7 +27,7 @@ public class Processor {
 					break;
 
 				case SaleLayout.LAYOUT_CODE:
-					saleLayout.read(line);
+					System.out.println(saleLayout.read(line));
 					break;
 			}
 		}
