@@ -1,6 +1,5 @@
-package br.com.cemim.salesreport.layout;
+package br.com.cemim.salesreport.processor;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import br.com.cemim.salesreport.business.Customer;
@@ -8,8 +7,11 @@ import br.com.cemim.salesreport.business.FileReport;
 import br.com.cemim.salesreport.business.GeneralReport;
 import br.com.cemim.salesreport.business.Sale;
 import br.com.cemim.salesreport.business.Salesman;
+import br.com.cemim.salesreport.layout.CustomerLayout;
+import br.com.cemim.salesreport.layout.SaleLayout;
+import br.com.cemim.salesreport.layout.SalesmanLayout;
 
-public class Processor {
+public class FileProcessor {
 	
 	private SalesmanLayout salesmanLayout;
 	private CustomerLayout customerLayout;
@@ -18,15 +20,16 @@ public class Processor {
 	private Map<Integer, Sale> saleMap;
 	private Map<String, Customer> customerMap;
 	private Map<String, Salesman> salesmanMap;
+	private GeneralReport generalReport;
 		
-	public Processor(
+	public FileProcessor(
 			SalesmanLayout salesmanLayout,
 			CustomerLayout customerLayout,
 			SaleLayout saleLayout,
 			Map<String, Salesman> salesmanMap,
 			Map<String, Customer> customerMap,
 			Map<Integer, Sale> saleMap,
-			GeneralReport report
+			GeneralReport generalReport
 		) {
 		this.salesmanLayout = salesmanLayout;
 		this.customerLayout = customerLayout;
@@ -34,38 +37,26 @@ public class Processor {
 		this.salesmanMap = salesmanMap;
 		this.customerMap = customerMap;
 		this.saleMap = saleMap;
+		this.generalReport = generalReport;
 	}
 
-	public FileReport process(String[] lines) {
+	public void process(String[] lines) {
 		FileReport fileReport = new FileReport();
 		saleLayout.setSalesmanMap(salesmanMap);
 		
 		for (String line : lines) {
-			switch (line.substring(0, 3)) {
-
-				case SalesmanLayout.LAYOUT_CODE:
-					Salesman salesman = salesmanLayout.read(line);
-					if (!salesmanMap.containsKey(salesman.getName())) {
-						salesmanMap.put(salesman.getName(), salesman);
-					}
-					break;
-
-				case CustomerLayout.LAYOUT_CODE:
-					Customer customer = customerLayout.read(line);
-					if (!customerMap.containsKey(customer.getName()) ) {
-						customerMap.put(customer.getName(), customer);
-					}
-					break;
-
-				case SaleLayout.LAYOUT_CODE:
-					Sale sale = saleLayout.read(line);
-					saleMap.put(sale.getId(), sale);
-					sale.getSalesman().addSale(sale.getTotal());;
-					break;
-			}
+			LineProcessor lineProcessor = new LineProcessor(
+					salesmanLayout,
+					customerLayout,
+					saleLayout,
+					salesmanMap,
+					customerMap,
+					saleMap,
+					generalReport,
+					fileReport
+			);
+			lineProcessor.analyze(line);
 		}
-		
-		return fileReport;
 	}
 
 }

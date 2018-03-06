@@ -2,9 +2,9 @@ import java.util.HashMap;
 
 import br.com.cemim.salesreport.business.GeneralReport;
 import br.com.cemim.salesreport.layout.CustomerLayout;
-import br.com.cemim.salesreport.layout.Processor;
 import br.com.cemim.salesreport.layout.SaleLayout;
 import br.com.cemim.salesreport.layout.SalesmanLayout;
+import br.com.cemim.salesreport.processor.FileProcessor;
 
 public class Main {
 	
@@ -14,7 +14,7 @@ public class Main {
 		SaleLayout saleLayout = new SaleLayout();
 		String home = System.getProperty("user.home");
 		
-		Processor processor = new Processor(
+		FileProcessor processor = new FileProcessor(
 				salesmanLayout,
 				customerLayout,
 				saleLayout,
