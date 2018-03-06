@@ -1,5 +1,7 @@
 package br.com.cemim.salesreport.layout;
 
+import br.com.cemim.salesreport.repository.SalesmanRepository;
+
 public class Processor {
 	
 	private SalesmanLayout salesmanLayout;
@@ -15,6 +17,10 @@ public class Processor {
 	}
 
 	public void process(String[] lines) {
+		
+		SalesmanRepository salesmanRepository = new SalesmanRepository();
+		saleLayout.setSalesmanRepository(salesmanRepository);
+		
 		for (String line : lines) {
 			switch (line.substring(0, 3)) {
 

@@ -32,7 +32,7 @@ public class SaleLayout extends AbstractLayout<Sale> {
 	@Override
 	public Sale read(String line) {
 		String[] fields = line.split(FIELD_DELIMITER);
-		
+
 		Salesman salesman = salesmanRepository.findByName(fields[FIELD_SALESMAN_NAME]);
 		
 		String rawItems = fields[FIELD_ITEMS].substring(1, fields[FIELD_ITEMS].length() - 1);
