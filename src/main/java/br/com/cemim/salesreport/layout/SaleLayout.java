@@ -24,16 +24,19 @@ public class SaleLayout extends AbstractLayout<Sale> {
 	public static final int FIELD_ITEM_PRICE = 2;
 	
 	private SalesmanRepository salesmanRepository;
-	
+
 	public void setSalesmanRepository(SalesmanRepository salesmanRepository) {
 		this.salesmanRepository = salesmanRepository;
 	}
 
+	/**
+	 * @todo Lançar exceção se não houver repository injetado.
+	 */
 	@Override
 	public Sale read(String line) {
 		String[] fields = line.split(FIELD_DELIMITER);
 
-		Salesman salesman = salesmanRepository.findByName(fields[FIELD_SALESMAN_NAME]);
+		Salesman salesman = salesmanRepository.find(fields[FIELD_SALESMAN_NAME]);
 		
 		String rawItems = fields[FIELD_ITEMS].substring(1, fields[FIELD_ITEMS].length() - 1);
 		

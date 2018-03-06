@@ -30,7 +30,7 @@ public class SaleLayoutTest {
 
 		Salesman salesman = new Salesman();
 		salesman.setName("Diego");
-		Mockito.when(salesmanRepository.findByName("Diego")).thenReturn(salesman);
+		Mockito.when(salesmanRepository.find("Diego")).thenReturn(salesman);
 
 		Sale sale = layout.read("003ç10ç[1-10-100,2-30-2.50,3-40-3.10]çDiego");
 		assertEquals(10, sale.getId());

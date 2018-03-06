@@ -1,5 +1,11 @@
 package br.com.cemim.salesreport.repository;
 
-public class CustomerRepository implements Repository {
+import br.com.cemim.salesreport.business.Customer;
+
+public class CustomerRepository extends AbstractRepository<Customer, String> {
+
+	public void add(Customer customer) {
+		map.put(customer.getName(), customer);
+	}
 
 }

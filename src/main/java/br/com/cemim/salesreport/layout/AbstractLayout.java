@@ -7,9 +7,5 @@ public abstract class AbstractLayout<T> {
 	protected final String FIELD_DELIMITER = "ç";
 
 	public abstract T read(String line);
-	
-	public String getLayoutCode() {
-		return LAYOUT_CODE;
-	}
 
 }
