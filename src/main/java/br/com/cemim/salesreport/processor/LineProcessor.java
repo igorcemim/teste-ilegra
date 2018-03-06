@@ -52,6 +52,7 @@ public class LineProcessor {
 				if (!salesmanMap.containsKey(salesman.getName())) {
 					salesmanMap.put(salesman.getName(), salesman);
 				}
+				fileReport.incrementAmountSalesman();
 				break;
 		
 			case CustomerLayout.LAYOUT_CODE:
@@ -59,6 +60,7 @@ public class LineProcessor {
 				if (!customerMap.containsKey(customer.getName()) ) {
 					customerMap.put(customer.getName(), customer);
 				}
+				fileReport.incrementAmountClients();
 				break;
 		
 			case SaleLayout.LAYOUT_CODE:

@@ -57,6 +57,7 @@ public class FileProcessor {
 			);
 			lineProcessor.analyze(line);
 		}
+		System.out.println(fileReport);
 	}
 
 }
