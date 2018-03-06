@@ -33,10 +33,16 @@ public class Sale implements Business {
 	public void setItems(List<Item> items) {
 		this.items = items;
 	}
+	
+	public double getTotal() {
+		return items.stream()
+					.mapToDouble(item -> item.getPrice() * item.getQuantity())
+					.sum();
+	}
 
 	@Override
 	public String toString() {
-		return "Sale [id=" + id + ", salesman=" + salesman + ", items=" + items + "]";
+		return "Sale [id=" + id + ", salesman=" + salesman + ", items=" + items + ", total=" + getTotal() + "]";
 	}
 
 }

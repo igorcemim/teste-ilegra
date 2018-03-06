@@ -1,3 +1,6 @@
+import java.util.HashMap;
+
+import br.com.cemim.salesreport.business.GeneralReport;
 import br.com.cemim.salesreport.layout.CustomerLayout;
 import br.com.cemim.salesreport.layout.Processor;
 import br.com.cemim.salesreport.layout.SaleLayout;
@@ -11,7 +14,15 @@ public class Main {
 		SaleLayout saleLayout = new SaleLayout();
 		String home = System.getProperty("user.home");
 		
-		Processor processor = new Processor(salesmanLayout, customerLayout, saleLayout, home);
+		Processor processor = new Processor(
+				salesmanLayout,
+				customerLayout,
+				saleLayout,
+				new HashMap<>(),
+				new HashMap<>(),
+				new HashMap<>(),
+				new GeneralReport()
+		);
 		String file =
 				"001ç1234567891234çDiegoç50000\n" + 
 				"001ç3245678865434çRenatoç40000.99\n" + 

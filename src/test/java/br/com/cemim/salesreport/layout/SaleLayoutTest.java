@@ -7,16 +7,17 @@ import org.mockito.MockitoAnnotations;
 
 import br.com.cemim.salesreport.business.Sale;
 import br.com.cemim.salesreport.business.Salesman;
-import br.com.cemim.salesreport.repository.SalesmanRepository;
 
 import static org.junit.Assert.*;
+
+import java.util.Map;
 
 import org.junit.Before;
 
 public class SaleLayoutTest {
 	
 	@Mock
-	private SalesmanRepository salesmanRepository;
+	private Map<String, Salesman> salesmanMap;
 
 	@Before
 	public void init(){
@@ -26,11 +27,11 @@ public class SaleLayoutTest {
 	@Test
 	public void testSale() {
 		SaleLayout layout = new SaleLayout();
-		layout.setSalesmanRepository(salesmanRepository);
+		layout.setSalesmanMap(salesmanMap);
 
 		Salesman salesman = new Salesman();
 		salesman.setName("Diego");
-		Mockito.when(salesmanRepository.find("Diego")).thenReturn(salesman);
+		Mockito.when(salesmanMap.get("Diego")).thenReturn(salesman);
 
 		Sale sale = layout.read("003ç10ç[1-10-100,2-30-2.50,3-40-3.10]çDiego");
 		assertEquals(10, sale.getId());

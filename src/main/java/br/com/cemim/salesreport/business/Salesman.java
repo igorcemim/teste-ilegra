@@ -8,6 +8,8 @@ public class Salesman implements Business {
 		
 	private double salary;
 	
+	private double sales;
+	
 	public String getCpf() {
 		return cpf;
 	}
@@ -32,9 +34,13 @@ public class Salesman implements Business {
 		this.salary = salary;
 	}
 
+	public void addSale(double sale) {
+		sales += sale;
+	}
+
 	@Override
 	public String toString() {
-		return "Salesman [cpf=" + cpf + ", name=" + name + ", salary=" + salary + "]";
+		return "Salesman [cpf=" + cpf + ", name=" + name + ", salary=" + salary + ", sales=" + sales + "]";
 	}
 
 }

@@ -6,6 +6,7 @@ import br.com.cemim.salesreport.repository.SalesmanRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import br.com.cemim.salesreport.business.Item;
@@ -24,9 +25,15 @@ public class SaleLayout extends AbstractLayout<Sale> {
 	public static final int FIELD_ITEM_PRICE = 2;
 	
 	private SalesmanRepository salesmanRepository;
+	
+	private Map<String, Salesman> salesmanMap;
 
 	public void setSalesmanRepository(SalesmanRepository salesmanRepository) {
 		this.salesmanRepository = salesmanRepository;
+	}
+	
+	public void setSalesmanMap(Map<String, Salesman> salesmanMap) {
+		this.salesmanMap = salesmanMap;
 	}
 
 	/**
@@ -36,7 +43,7 @@ public class SaleLayout extends AbstractLayout<Sale> {
 	public Sale read(String line) {
 		String[] fields = line.split(FIELD_DELIMITER);
 
-		Salesman salesman = salesmanRepository.find(fields[FIELD_SALESMAN_NAME]);
+		Salesman salesman = salesmanMap.get(fields[FIELD_SALESMAN_NAME]);
 		
 		String rawItems = fields[FIELD_ITEMS].substring(1, fields[FIELD_ITEMS].length() - 1);
 		
@@ -49,7 +56,6 @@ public class SaleLayout extends AbstractLayout<Sale> {
 	            item.setId(Integer.parseInt(itemData[FIELD_ITEM_ID]));
 	            item.setQuantity(Integer.parseInt(itemData[FIELD_ITEM_QUANTITY]));
 	            item.setPrice(Double.parseDouble(itemData[FIELD_ITEM_PRICE]));
-
 	            return item;
 	        })
 			.collect(Collectors.toList());
