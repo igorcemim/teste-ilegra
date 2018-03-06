@@ -22,6 +22,9 @@ public class LineProcessor {
 	private Map<String, Salesman> salesmanMap;
 	private GeneralReport generalReport;
 	private FileReport fileReport;
+	
+	private static final int LAYOUT_CODE_POSITION_START = 0;
+	private static final int LAYOUT_CODE_POSITION_END = 3;
 
 	public LineProcessor(
 			SalesmanLayout salesmanLayout,
@@ -45,7 +48,7 @@ public class LineProcessor {
 
 	public void analyze(String line) {
 		
-		switch (line.substring(0, 3)) {
+		switch (line.substring(LAYOUT_CODE_POSITION_START, LAYOUT_CODE_POSITION_END)) {
 
 			case SalesmanLayout.LAYOUT_CODE:
 				
