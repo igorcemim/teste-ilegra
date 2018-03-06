@@ -36,5 +36,6 @@ public class SaleLayoutTest {
 		Sale sale = layout.read("003ç10ç[1-10-100,2-30-2.50,3-40-3.10]çDiego");
 		assertEquals(10, sale.getId());
 		assertEquals("Diego", sale.getSalesman().getName());
+		assertEquals(1199, sale.getTotal(), 0.001);
 	}
 }
