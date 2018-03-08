@@ -13,9 +13,10 @@ hs_err_pid*
 
 .classpath
 .project
-.settings/*
-.vscode/*
-.gradle/*
 
+.settings/
+.vscode/
+.gradle/
+bin/
 build/
 target/
