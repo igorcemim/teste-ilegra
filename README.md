@@ -1,3 +1,5 @@
+# Sales Report
+
 ## Application
 
 You must build a data analysis system 100% coded in any of the languages above. The
@@ -54,3 +56,6 @@ The output file contents should summarize the following data:
 
 This application should be running all the time, without any breaks. Everytime new files
 become available, everything should be executed.
+
+## How to run the application
+./gradlew build && java -jar build/libs/SalesReport.jar
