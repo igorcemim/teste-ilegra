@@ -10,6 +10,10 @@ import br.com.cemim.salesreport.business.Salesman;
 import br.com.cemim.salesreport.layout.CustomerLayout;
 import br.com.cemim.salesreport.layout.SaleLayout;
 import br.com.cemim.salesreport.layout.SalesmanLayout;
+import br.com.cemim.salesreport.processor.line.CustomerLine;
+import br.com.cemim.salesreport.processor.line.Line;
+import br.com.cemim.salesreport.processor.line.SaleLine;
+import br.com.cemim.salesreport.processor.line.SalesmanLine;
 
 public class LineProcessor {
 
@@ -22,7 +26,7 @@ public class LineProcessor {
 	private Map<String, Salesman> salesmanMap;
 	private GeneralReport generalReport;
 	private FileReport fileReport;
-	
+
 	private static final int LAYOUT_CODE_POSITION_START = 0;
 	private static final int LAYOUT_CODE_POSITION_END = 3;
 
@@ -46,40 +50,25 @@ public class LineProcessor {
 		this.fileReport = fileReport;
 	}
 
-	public void process(String line) {
+	public void process(String line) throws Exception {
+		Line lineImplementation = null;
 		switch (line.substring(LAYOUT_CODE_POSITION_START, LAYOUT_CODE_POSITION_END)) {
 
 			case SalesmanLayout.LAYOUT_CODE:
-				
-				Salesman salesman = salesmanLayout.read(line);
-				if (!salesmanMap.containsKey(salesman.getName())) {
-					salesmanMap.put(salesman.getName(), salesman);
-				}
-				fileReport.incrementAmountSalesman();
+				lineImplementation = new SalesmanLine(salesmanLayout, salesmanMap, fileReport);
 				break;
-		
+
 			case CustomerLayout.LAYOUT_CODE:
-				
-				Customer customer = customerLayout.read(line);
-				if (!customerMap.containsKey(customer.getName()) ) {
-					customerMap.put(customer.getName(), customer);
-				}
-				fileReport.incrementAmountClients();
+				lineImplementation = new CustomerLine(customerLayout, customerMap, fileReport);
 				break;
-		
+
 			case SaleLayout.LAYOUT_CODE:
-				
-				Sale sale = saleLayout.read(line);
-				if (generalReport.getMostExpensiveSale() == null) {
-					generalReport.setMostExpensiveSale(sale);
-				}
-				if (sale.getTotal() > generalReport.getMostExpensiveSale().getTotal()) {
-					generalReport.setMostExpensiveSale(sale);
-				}
-				Salesman saleSalesman = sale.getSalesman(); 
-				saleSalesman.addSale(sale.getTotal());;
-				saleMap.put(sale.getId(), sale);
+				lineImplementation = new SaleLine(saleLayout, saleMap, generalReport);
 				break;
+
+			default:
+				throw new Exception("Linha inválida.");
 		}
+		lineImplementation.process(line);
 	}
 }

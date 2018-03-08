@@ -13,16 +13,16 @@ import br.com.cemim.salesreport.layout.SaleLayout;
 import br.com.cemim.salesreport.layout.SalesmanLayout;
 
 public class FileProcessor {
-	
+
 	private SalesmanLayout salesmanLayout;
 	private CustomerLayout customerLayout;
 	private SaleLayout saleLayout;
-	
+
 	private Map<Integer, Sale> saleMap;
 	private Map<String, Customer> customerMap;
 	private Map<String, Salesman> salesmanMap;
 	private GeneralReport generalReport;
-		
+
 	public FileProcessor(
 			SalesmanLayout salesmanLayout,
 			CustomerLayout customerLayout,
@@ -54,7 +54,11 @@ public class FileProcessor {
 			fileReport
 		);
 		lines.forEach(line -> {
-			lineProcessor.process(line);
+			try {
+				lineProcessor.process(line);
+			} catch (Exception e) {
+				System.out.println("Erro ao processar linha - " + e.getMessage());
+			}
 		});
 
 		return fileReport;

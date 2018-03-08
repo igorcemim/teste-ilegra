@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 import br.com.cemim.salesreport.business.Customer;
@@ -21,24 +20,24 @@ import br.com.cemim.salesreport.layout.SalesmanLayout;
 import br.com.cemim.salesreport.processor.FileProcessor;
 
 public class DirectoryProcessor {
-	
+
 	private GeneralReport generalReport;
-	
+
 	private List<FileReport> filesReports;
-	
+
 	private String inputPath;
-	
+
 	public DirectoryProcessor(String inputPath, GeneralReport generalReport, List<FileReport> filesReports) {
 		this.inputPath = inputPath;
 		this.generalReport = generalReport;
 		this.filesReports = filesReports;
 	}
-	
+
 	public void process() throws IOException {
 		Map<String, Salesman> salesmanMap = new HashMap<>();
 		Map<String, Customer> customerMap = new HashMap<>();
 		Map<Integer, Sale> saleMap = new HashMap<>();
-		
+
 		SalesmanLayout salesmanLayout = new SalesmanLayout();
 		CustomerLayout customerLayout = new CustomerLayout();
 		SaleLayout saleLayout = new SaleLayout();
@@ -53,7 +52,7 @@ public class DirectoryProcessor {
 				saleMap,
 				generalReport
 		);
-		
+
 		Files.list(Paths.get(inputPath))
         	.filter(p -> p.toString().endsWith(".dat"))
         	.forEach(p -> {
@@ -64,18 +63,17 @@ public class DirectoryProcessor {
 					filesReports.add(report);
 				} catch (IOException e) {
 					e.printStackTrace();
-				}   		
+				}
         	});
 
-		try {
+		if (salesmanMap.size() > 0) {
 			Salesman worstSalesman = salesmanMap.values()
 					.stream()
 					.min(Comparator.comparingDouble(Salesman::getSales))
 					.get();
 			generalReport.setWorstSalesman(worstSalesman);
-		} catch (NoSuchElementException e) {
-			e.printStackTrace();
 		}
+
 	}
 
 }

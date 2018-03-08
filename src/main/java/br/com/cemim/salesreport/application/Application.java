@@ -30,8 +30,12 @@ public class Application {
 		directoryProcessor.process();
 		System.out.println("Arquivos processados.\n");
 		
-		ReportWriter reportWriter = new ReportWriter(outputPath, generalReport, filesReports);
-		reportWriter.write();
+		if (filesReports.size() > 0 && generalReport != null) {
+			ReportWriter reportWriter = new ReportWriter(outputPath, generalReport, filesReports);
+			reportWriter.write();
+		} else {
+			System.out.println("Não há dados para gerar o relatório.");
+		}
 	}
 
 }
